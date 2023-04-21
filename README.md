@@ -1,3 +1,3 @@
-# arnieme
+# ArnieMe
 
-A new Flutter project.
+ArnieMe using https://consumet.org/ API
