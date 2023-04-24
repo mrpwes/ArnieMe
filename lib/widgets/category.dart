@@ -1,3 +1,4 @@
+import 'package:arnieme/screens/anime_list.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -28,55 +29,65 @@ Widget categoryContent(Future categoryGetter) {
               ...data.data['results'].map(
                 (details) => Padding(
                   padding: const EdgeInsets.only(left: 5, right: 5),
-                  child: SizedBox(
-                    width: 150,
-                    height: 200,
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10)),
-                            child: CachedNetworkImage(
-                              imageUrl: details['image'],
-                              placeholder: (context, url) => const Center(
-                                child: Padding(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(AnimeList.routeName, arguments: {
+                        'imageUrl': details['image'],
+                        'animeTitle': details['title'],
+                        'animeId': details['id'],
+                      });
+                    },
+                    child: SizedBox(
+                      width: 150,
+                      height: 200,
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10)),
+                              child: CachedNetworkImage(
+                                imageUrl: details['image'],
+                                placeholder: (context, url) => const Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: SizedBox(
+                                        height: 30,
+                                        width: 30,
+                                        child: CircularProgressIndicator()),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Padding(
                                   padding: EdgeInsets.all(10.0),
-                                  child: SizedBox(
-                                      height: 30,
-                                      width: 30,
-                                      child: CircularProgressIndicator()),
+                                  child: Icon(Icons.error),
                                 ),
                               ),
-                              errorWidget: (context, url, error) =>
-                                  const Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Icon(Icons.error),
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              color: Color.fromRGBO(165, 215, 232, 1),
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                details['title'],
+                                style: const TextStyle(color: Colors.black),
+                                maxLines: 3,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.fade,
                               ),
                             ),
                           ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(
-                            color: Color.fromRGBO(165, 215, 232, 1),
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10)),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              details['title'],
-                              style: const TextStyle(color: Colors.black),
-                              maxLines: 3,
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.fade,
-                            ),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

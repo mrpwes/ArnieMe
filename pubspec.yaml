@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   http: ^0.13.5
   cached_network_image: ^3.2.3
+  readmore: ^2.1.0
+  
 
 
 

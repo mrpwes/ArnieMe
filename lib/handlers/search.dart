@@ -25,4 +25,17 @@ class GetAnime {
       return ('Request failed with status: ${response.statusCode}.');
     }
   }
+
+  Future getAnimeInfo(String queryParameters) async {
+    var url =
+        Uri.https('api.consumet.org', '/anime/gogoanime/info/$queryParameters');
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final animeInfo = json.decode(response.body);
+      return animeInfo;
+    } else {
+      return ('Request failed with status: ${response.statusCode}.');
+    }
+  }
 }
